@@ -23,10 +23,30 @@ class BooksApp extends React.Component {
       .then(books => this.setState(prevState => ({ booksInShelves: books })))
   }
 
+  modifyBooksInShelves = (modifiedBook, shelf) => {
+    this.setState( prevState => ({
+      booksInShelves : this.state.booksInShelves.map( book => {
+        if(book.id === modifiedBook.id){
+          return {...book, shelf: shelf}
+        }
+        return book
+      })
+    }))
+
+  }
+
+  moveBook = (book, shelf) => {
+    BooksAPI.update(book, shelf)
+      .then(res => {
+        this.modifyBooksInShelves(book, shelf)
+      })
+  }
   render() {
     return (
       <div className="app">
-        <Route exact path='/' render={() => (<MainPage booksInShelves={this.state.booksInShelves} />)} />
+        <Route exact path='/' render={() => (
+          <MainPage booksInShelves={this.state.booksInShelves} moveBook={this.moveBook} />)}
+        />
         <Route path='/search' component={SearchPage} />
       </div>
     )

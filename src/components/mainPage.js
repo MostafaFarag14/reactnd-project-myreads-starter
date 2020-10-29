@@ -17,8 +17,8 @@ export default class MainPage extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            {['currentlyReading', 'wantToRead', 'read'].map(shelf => (
-              <BookShelf shelf={shelf} books={this.filterByShelf(shelf)} />
+            {['currentlyReading', 'wantToRead', 'read'].map((shelf, index) => (
+              <BookShelf key={index} shelf={shelf} books={this.filterByShelf(shelf)} moveBook={this.props.moveBook}/>
             ))}
           </div>
         </div>
