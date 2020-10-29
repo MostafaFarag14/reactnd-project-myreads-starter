@@ -23,32 +23,34 @@ class BooksApp extends React.Component {
       .then(books => this.setState(prevState => ({ booksInShelves: books })))
   }
 
-  modifyBooksInShelves = (modifiedBook, shelf) => {
-    this.setState( prevState => ({
-      booksInShelves : this.state.booksInShelves.map( book => {
-        if(book.id === modifiedBook.id){
-          return {...book, shelf: shelf}
-        }
-        return book
-      })
-    }))
-
+  modifyBooksInShelves = (bookToAdd, shelf) => {
+    const BookOnShelf = this.state.booksInShelves.filter(book => book.id === bookToAdd.id)
+    BookOnShelf.length !== 0 ?
+      this.setState(prevState => ({
+        booksInShelves: this.state.booksInShelves.map(book => {
+          if (book.id === bookToAdd.id) {
+            return { ...book, shelf: shelf }
+          }
+          return book
+        })
+      }))
+      :
+      this.setState(prevState => ({ booksInShelves: [...prevState.booksInShelves, { ...bookToAdd, shelf: shelf }] }))
   }
 
   moveBook = (book, shelf) => {
+    this.modifyBooksInShelves(book, shelf)
     BooksAPI.update(book, shelf)
-      .then(res => {
-        console.log(res)
-        this.modifyBooksInShelves(book, shelf)
-      })
   }
   render() {
     return (
-      <div className="app">
+      <div className="app" >
         <Route exact path='/' render={() => (
           <MainPage booksInShelves={this.state.booksInShelves} moveBook={this.moveBook} />)}
         />
-        <Route path='/search' component={SearchPage} />
+        <Route path='/search' render={() => (
+          <SearchPage moveBook={this.moveBook} booksInShelves={this.state.booksInShelves}/>
+        )} />
       </div>
     )
   }
