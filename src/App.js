@@ -4,7 +4,7 @@ import './App.css'
 
 import SearchPage from './components/searchPage'
 import MainPage from './components/mainPage'
-import { Link, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 class BooksApp extends React.Component {
   state = {
     /**
@@ -13,7 +13,7 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false
+   
   }
 
   render() {
