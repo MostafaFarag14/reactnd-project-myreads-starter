@@ -26,16 +26,18 @@ class BooksApp extends React.Component {
   modifyBooksInShelves = (bookToAdd, shelf) => {
     const BookOnShelf = this.state.booksInShelves.filter(book => book.id === bookToAdd.id)
     BookOnShelf.length !== 0 ?
-      this.setState(prevState => ({
-        booksInShelves: this.state.booksInShelves.map(book => {
-          if (book.id === bookToAdd.id) {
-            return { ...book, shelf: shelf }
-          }
-          return book
-        })
-      }))
+    shelf === 'none' ? this.setState({booksInShelves: this.state.booksInShelves.filter( book => book.id !== bookToAdd.id)})
+    :
+    this.setState(prevState => ({
+      booksInShelves: this.state.booksInShelves.map(book => {
+        if (book.id === bookToAdd.id) {
+          return { ...book, authors: bookToAdd.authors, shelf: shelf }
+        }
+        return book
+      })
+    }))
       :
-      this.setState(prevState => ({ booksInShelves: [...prevState.booksInShelves, { ...bookToAdd, shelf: shelf }] }))
+    this.setState(prevState => ({ booksInShelves: [...prevState.booksInShelves, { ...bookToAdd, shelf: shelf }] }),)
   }
 
   moveBook = (book, shelf) => {
@@ -49,7 +51,7 @@ class BooksApp extends React.Component {
           <MainPage booksInShelves={this.state.booksInShelves} moveBook={this.moveBook} />)}
         />
         <Route path='/search' render={() => (
-          <SearchPage moveBook={this.moveBook} booksInShelves={this.state.booksInShelves}/>
+          <SearchPage moveBook={this.moveBook} booksInShelves={this.state.booksInShelves} />
         )} />
       </div>
     )

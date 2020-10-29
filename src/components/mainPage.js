@@ -2,7 +2,20 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import BookShelf from './bookShelf'
 
-
+const shelves = [
+  {
+    name: 'Currently Reading',
+    id: 'currentlyReading'
+  },
+  {
+    name: 'Want To Read',
+    id: 'wantToRead'
+  },
+  {
+    name: 'Read',
+    id: 'read'
+  }
+]
 export default class MainPage extends Component {
 
   filterByShelf = shelf => {
@@ -17,8 +30,8 @@ export default class MainPage extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            {['currentlyReading', 'wantToRead', 'read'].map((shelf, index) => (
-              <BookShelf key={index} shelf={shelf} books={this.filterByShelf(shelf)} moveBook={this.props.moveBook}/>
+            {shelves.map((shelf, index) => (
+              <BookShelf key={index} shelf={shelf.name} books={this.filterByShelf(shelf.id)} moveBook={this.props.moveBook} />
             ))}
           </div>
         </div>
