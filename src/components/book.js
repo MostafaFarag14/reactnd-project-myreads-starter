@@ -1,5 +1,23 @@
 import React, { Component } from 'react'
 
+const options = [
+  {
+    value: 'currentlyReading',
+    text: 'Currently Reading'
+  },
+  {
+    value: 'wantToRead',
+    text: 'Want to Read'
+  },
+  {
+    value: 'read',
+    text: 'Read'
+  },
+  {
+    value: 'none',
+    text: 'None'
+  }
+]
 export default class Book extends Component {
   render() {
     const { book, moveBook } = this.props
@@ -9,12 +27,12 @@ export default class Book extends Component {
           <div className="book-top">
             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
             <div className="book-shelf-changer">
-              <select onChange={e => moveBook(book, e.target.value)}>
+              <select value={book.shelf} onChange={e => moveBook(book, e.target.value)}>
                 <option value="move" disabled>Move to...</option>
-                <option value="currentlyReading">Currently Reading</option>
-                <option value="wantToRead">Want to Read</option>
-                <option value="read">Read</option>
-                <option value="none">None</option>
+                {options.map((option, index) => (<option key={index} value={option.value}
+                >
+                  {option.text}
+                </option>))}
               </select>
             </div>
           </div>

@@ -38,6 +38,7 @@ class BooksApp extends React.Component {
   moveBook = (book, shelf) => {
     BooksAPI.update(book, shelf)
       .then(res => {
+        console.log(res)
         this.modifyBooksInShelves(book, shelf)
       })
   }
