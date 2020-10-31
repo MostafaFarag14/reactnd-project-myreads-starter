@@ -4,6 +4,24 @@ This is the starter template for the final assessment project for Udacity's Reac
 
 Of course, you are free to start this project from scratch if you wish! Just be sure to use [Create React App](https://github.com/facebookincubator/create-react-app) to bootstrap the project.
 
+# Project Description
+A bookshelf app that allows you to select and categorize books you have read, are currently reading, or want to read.
+Also you can search for books provided by an API server and add these books to any shelf you want. All of your books on shelves are stored in the backend so that you can find them any time from any where you use the app.
+
+# Functionality
+* The main page displays a list of shelves each of which contains a number of books.
+* Each book has a control that lets you select the shelf for that book.
+* There is a floating **+** button to add new books to your library , and that button takes you to a search page.
+* The search page has a text input to find books so that the books that match that text are displayed on the page, along with a control list that lets you add the book to your library to any shelf you want.
+* There is a back button to get you back to the main page.
+* Any change you made to books are reflected through the whole app and updated in back end using API server.
+* A 404 not found  page is displayed if you navigate to any other route in the app except the `/` and `/search` routes using React Router
+
+# Install
+* Make sure you have `NodeJs` installed
+* run `npm install` in your terminal to Install all project dependencies  
+* run `npm start` to run the app
+
 ## TL;DR
 
 To get started developing right away:

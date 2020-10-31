@@ -20,7 +20,11 @@ export default class SearchPage extends Component {
               this.setState(prevState =>
                 ({ result: books.filter(book => book.hasOwnProperty('imageLinks')) }))
             }
+            else {
+              this.setState(prevState => ({ result: [] }))
+            }
           })
+          .catch( error => console.log(error))
       }
       else {
         this.setState(prevState => ({ result: [] }))

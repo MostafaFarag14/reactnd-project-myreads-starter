@@ -4,8 +4,8 @@ import './App.css'
 
 import SearchPage from './components/searchPage'
 import MainPage from './components/mainPage'
-import { Route } from 'react-router-dom'
-
+import { Route, Switch } from 'react-router-dom'
+import ErrorPage from './components/errorPage'
 
 class BooksApp extends React.Component {
   state = {
@@ -26,18 +26,18 @@ class BooksApp extends React.Component {
   modifyBooksInShelves = (bookToAdd, shelf) => {
     const BookOnShelf = this.state.booksInShelves.filter(book => book.id === bookToAdd.id)
     BookOnShelf.length !== 0 ?
-    shelf === 'none' ? this.setState({booksInShelves: this.state.booksInShelves.filter( book => book.id !== bookToAdd.id)})
-    :
-    this.setState(prevState => ({
-      booksInShelves: this.state.booksInShelves.map(book => {
-        if (book.id === bookToAdd.id) {
-          return { ...book, authors: bookToAdd.authors, shelf: shelf }
-        }
-        return book
-      })
-    }))
+      shelf === 'none' ? this.setState({ booksInShelves: this.state.booksInShelves.filter(book => book.id !== bookToAdd.id) })
+        :
+        this.setState(prevState => ({
+          booksInShelves: this.state.booksInShelves.map(book => {
+            if (book.id === bookToAdd.id) {
+              return { ...book, authors: bookToAdd.authors, shelf: shelf }
+            }
+            return book
+          })
+        }))
       :
-    this.setState(prevState => ({ booksInShelves: [...prevState.booksInShelves, { ...bookToAdd, shelf: shelf }] }),)
+      this.setState(prevState => ({ booksInShelves: [...prevState.booksInShelves, { ...bookToAdd, shelf: shelf }] }),)
   }
 
   moveBook = (book, shelf) => {
@@ -47,12 +47,15 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app" >
-        <Route exact path='/' render={() => (
-          <MainPage booksInShelves={this.state.booksInShelves} moveBook={this.moveBook} />)}
-        />
-        <Route path='/search' render={() => (
-          <SearchPage moveBook={this.moveBook} booksInShelves={this.state.booksInShelves} />
-        )} />
+        <Switch>
+          <Route exact path='/' render={() => (
+            <MainPage booksInShelves={this.state.booksInShelves} moveBook={this.moveBook} />)}
+          />
+          <Route path='/search' render={() => (
+            <SearchPage moveBook={this.moveBook} booksInShelves={this.state.booksInShelves} />
+          )} />
+          <Route component={ErrorPage} />
+        </Switch>
       </div>
     )
   }
